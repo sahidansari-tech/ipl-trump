@@ -981,17 +981,14 @@
     }
     function listenWait() {
 
-      roomRef.child('slots').on('value', snap => {
+      roomRef.child('slots').on(
+        'value',
+        snap => {
 
-        const slots = snap.val() || {};
+          const slots =
+            snap.val() || {};
 
-        renderSlots(slots);
-
-        const n = Object.keys(slots).length;
-
-        if (
-          GS?.phase === 'playing'
-        ) {
+          renderSlots(slots);
 
           Object.values(slots)
             .forEach(p => {
@@ -1009,45 +1006,50 @@
 
             });
 
-        }
+          const n =
+            Object.keys(slots)
+              .length;
 
-        if (n === 4) {
+          if (n === 4) {
 
-          setWS(
-            'All 4 players ready! 🎉',
-            'c-green'
-          );
+            setWS(
+              'All 4 players ready! 🎉',
+              'c-green'
+            );
 
-          if (mySlot === 0) {
+            if (
+              mySlot === 0
+            ) {
 
-            document
-              .getElementById(
-                'startBtn'
-              )
-              .style.display =
-              'block';
+              document
+                .getElementById(
+                  'startBtn'
+                )
+                .style.display =
+                'block';
+
+            }
 
           }
 
-        }
+          else {
 
-        else {
+            setWS(
+              `Waiting... (${n}/4)`
+            );
 
-          setWS(
-            `Waiting... (${n}/4)`
-          );
+          }
 
-        }
+        });
 
-      });
-
-      roomRef
-        .child('phase')
-        .on('value', snap => {
+      roomRef.child(
+        'phase'
+      ).on(
+        'value',
+        snap => {
 
           if (
-            snap.val() ===
-            'playing'
+            snap.val() === 'playing'
           ) {
 
             initGame();
