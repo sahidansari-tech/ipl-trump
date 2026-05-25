@@ -6,6 +6,7 @@
     "dev": "node build.js && npx serve dist"
   },
   "dependencies": {
-    "dotenv": "^16.0.0"
+    "dotenv": "^16.0.0",
+    "firebase": "^12.13.0"
   }
 }
