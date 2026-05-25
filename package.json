@@ -1,0 +1,11 @@
+{
+  "name": "ipl-trump",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "node build.js",
+    "dev": "node build.js && npx serve dist"
+  },
+  "dependencies": {
+    "dotenv": "^16.0.0"
+  }
+}

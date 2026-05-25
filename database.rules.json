@@ -1,0 +1,22 @@
+{
+  "rules": {
+    "iplt2": {
+      "$roomCode": {
+        ".read": true,
+        ".write": true,
+        ".validate": "newData.hasChildren(['phase'])",
+        "slots": {
+          "$slot": {
+            ".validate": "newData.hasChild('name') && newData.child('name').val().length <= 20"
+          }
+        }
+      }
+    },
+    "sd2": {
+      "$roomCode": {
+        ".read": true,
+        ".write": true
+      }
+    }
+  }
+}
