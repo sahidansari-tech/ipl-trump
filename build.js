@@ -2,41 +2,37 @@ const fs = require('fs');
 require('dotenv').config();
 
 /*
-Read HTML
+Firebase ENV inject helper
 */
-let html =
-fs.readFileSync(
-'index.html',
-'utf8'
-);
+function injectFirebase(content){
 
-/*
-Inject Firebase ENV
-*/
-html = html
+return content
 
 .replace(
-'__FIREBASE_API_KEY__',
+/__FIREBASE_API_KEY__/g,
 process.env.FIREBASE_API_KEY || ''
 )
 
 .replace(
-'__FIREBASE_AUTH_DOMAIN__',
+/__FIREBASE_AUTH_DOMAIN__/g,
 process.env.FIREBASE_AUTH_DOMAIN || ''
 )
 
 .replace(
-'__FIREBASE_DATABASE_URL__',
+/__FIREBASE_DATABASE_URL__/g,
 process.env.FIREBASE_DATABASE_URL || ''
 )
 
 .replace(
-'__FIREBASE_PROJECT_ID__',
+/__FIREBASE_PROJECT_ID__/g,
 process.env.FIREBASE_PROJECT_ID || ''
+
 );
 
+}
+
 /*
-Create dist folder
+Create dist
 */
 fs.mkdirSync(
 'dist',
@@ -46,12 +42,62 @@ recursive:true
 );
 
 /*
-Write HTML
+Build HTML
 */
+if(
+fs.existsSync(
+'index.html'
+)
+){
+
+let html=
+
+fs.readFileSync(
+'index.html',
+'utf8'
+);
+
+html=
+
+injectFirebase(
+html
+);
+
 fs.writeFileSync(
 'dist/index.html',
 html
 );
+
+}
+
+/*
+Build JS
+*/
+if(
+fs.existsSync(
+'app.js'
+)
+){
+
+let js=
+
+fs.readFileSync(
+'app.js',
+'utf8'
+);
+
+js=
+
+injectFirebase(
+js
+);
+
+fs.writeFileSync(
+'dist/app.js',
+js
+);
+
+}
 
 /*
 Copy CSS
@@ -70,23 +116,7 @@ fs.copyFileSync(
 }
 
 /*
-Copy JS
-*/
-if(
-fs.existsSync(
-'app.js'
-)
-){
-
-fs.copyFileSync(
-'app.js',
-'dist/app.js'
-);
-
-}
-
-/*
-Optional assets folder support
+Optional assets
 */
 if(
 fs.existsSync(
