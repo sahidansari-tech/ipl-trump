@@ -3,8 +3,7 @@
 
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport"
-        content="width=device-width, initial-scale=1.0, user-scalable=no" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
   <title>IPL TRUMP — Multiplayer Career Cards</title>
 
   <!-- Premium fonts -->
@@ -18,10 +17,67 @@
 
   <!-- Main styles -->
   <link rel="stylesheet" href="style.css" />
-  
+
 </head>
 
 <body>
+  <!-- ═══ SPLASH ═══ -->
+  <div class="scr scr-center" id="sSplash">
+    <div class="splash-inner">
+      <div class="splash-logo">IPL TRUMP</div>
+      <div class="splash-tagline">CAREER STATS · MULTIPLAYER</div>
+      <div class="splash-seasons">IPL 2008 – 2024</div>
+      <div class="splash-loader">
+        <div class="splash-bar">
+          <div class="splash-bar-fill" id="splashBarFill"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ MAIN MENU ═══ -->
+  <div class="scr scr-center" id="sMenu" style="display:none">
+    <div class="panel menu-panel">
+      <div class="logo">IPL TRUMP</div>
+      <div class="logo-sub">ONLINE MULTIPLAYER</div>
+      <div class="menu-btns">
+        <button class="btn btn-gold menu-btn" id="menuPlayBtn">
+          ⚡ PLAY ONLINE
+        </button>
+        <button class="btn btn-outline menu-btn" id="menuHowBtn">
+          📖 HOW TO PLAY
+        </button>
+      </div>
+      <div class="menu-footer">47 LEGENDARY PLAYERS · 8 STATS</div>
+    </div>
+  </div>
+
+  <!-- ═══ GAME MODE ═══ -->
+  <div class="scr scr-center" id="sMode" style="display:none">
+    <div class="panel">
+      <div class="back-row">
+        <button class="back-btn" id="modeBackBtn">← BACK</button>
+        <div class="logo logo-small">SELECT MODE</div>
+      </div>
+      <div class="mode-cards">
+        <div class="mode-card mode-card-active" id="modeCardClassic">
+          <div class="mode-card-icon">🃏</div>
+          <div class="mode-card-title">CLASSIC DECK</div>
+          <div class="mode-card-desc">47 legendary IPL players<br>2–4 players</div>
+          <div class="mode-card-badge">AVAILABLE</div>
+        </div>
+        <div class="mode-card mode-card-locked" id="modeCardAll">
+          <div class="mode-card-icon">🏟</div>
+          <div class="mode-card-title">ALL PLAYERS</div>
+          <div class="mode-card-desc">Full IPL roster<br>Min 4 players</div>
+          <div class="mode-card-badge">COMING SOON</div>
+        </div>
+      </div>
+      <button class="btn btn-gold" id="modeContinueBtn">CONTINUE →</button>
+      <div class="status c-muted" id="modeStatus"></div>
+    </div>
+  </div>
+
   <!-- LOBBY -->
   <div class="scr" id="sLobby">
     <div class="panel">
@@ -141,6 +197,27 @@
 
   <!-- App logic -->
   <script src="app.js"></script>
+
+  <!-- ═══ HOW TO PLAY OVERLAY ═══ -->
+  <div id="sHow" style="display:none;position:fixed;inset:0;z-index:200;
+  background:rgba(2,6,23,0.97);display:none;flex-direction:column;
+  align-items:center;justify-content:center;padding:20px;">
+    <div class="panel" style="max-width:440px;width:100%">
+      <div class="logo logo-small" style="margin-bottom:12px">HOW TO PLAY</div>
+      <div class="how-steps">
+        <div class="how-step"><span class="how-n">1</span>Create or join a room with friends</div>
+        <div class="how-step"><span class="how-n">2</span>Cards are dealt equally to all players</div>
+        <div class="how-step"><span class="how-n">3</span>Picker taps any stat directly on their card</div>
+        <div class="how-step"><span class="how-n">4</span>Highest stat wins all played cards</div>
+        <div class="how-step"><span class="how-n">5</span>Last player with cards wins the game</div>
+      </div>
+      <div style="margin-top:8px;font-size:0.65rem;color:var(--muted);text-align:center">
+        Economy Rate: LOWER wins · All others: HIGHER wins
+      </div>
+      <button class="btn btn-outline" id="howCloseBtn" style="margin-top:14px">GOT IT ✓</button>
+    </div>
+  </div>
+
 </body>
 
 </html>
