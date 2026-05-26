@@ -6,6 +6,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
   <title>IPL TRUMP — Multiplayer Career Cards</title>
 
+  <!-- PWA meta -->
+  <meta name="theme-color" content="#020617">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="IPL TRUMP">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="apple-touch-icon" href="/icon-192.png">
+
   <!-- Premium fonts -->
   <link
     href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Inter:wght@400;500;600;700&display=swap"
@@ -215,6 +224,21 @@
         Economy Rate: LOWER wins · All others: HIGHER wins
       </div>
       <button class="btn btn-outline" id="howCloseBtn" style="margin-top:14px">GOT IT ✓</button>
+    </div>
+  </div>
+
+  <!-- PWA Install Banner -->
+  <div id="installBanner" class="install-banner" style="display:none">
+    <div class="install-left">
+      <div class="install-icon">🏏</div>
+      <div class="install-copy">
+        <div class="install-title">Add to Home Screen</div>
+        <div class="install-sub">Play offline, no browser needed</div>
+      </div>
+    </div>
+    <div class="install-actions">
+      <button class="install-btn-yes" id="installYes">INSTALL</button>
+      <button class="install-btn-no" id="installNo">✕</button>
     </div>
   </div>
 

@@ -1568,3 +1568,114 @@ body::before {
 .ipl-card2.winner-card {
   animation: winGlow 1.8s ease infinite;
 }
+
+/* ══════════════════════════════════════════
+   PHASE 4 — PWA INSTALL BANNER
+══════════════════════════════════════════ */
+
+.install-banner {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 300;
+  background: linear-gradient(135deg, rgba(15,23,42,0.99), rgba(10,15,28,0.99));
+  border-top: 1px solid rgba(200,160,60,0.45);
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  animation: bannerSlide 0.4s cubic-bezier(0.22,1,0.36,1) both;
+  box-shadow: 0 -8px 32px rgba(0,0,0,0.6);
+}
+
+@keyframes bannerSlide {
+  from { transform: translateY(100%); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+.install-banner.hiding {
+  animation: bannerHide 0.3s ease forwards;
+}
+
+@keyframes bannerHide {
+  to { transform: translateY(100%); opacity: 0; }
+}
+
+.install-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  min-width: 0;
+}
+
+.install-icon {
+  font-size: 1.8rem;
+  flex-shrink: 0;
+}
+
+.install-copy { min-width: 0; }
+
+.install-title {
+  font-family: "Orbitron", sans-serif;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--gold-soft);
+}
+
+.install-sub {
+  font-size: 0.6rem;
+  color: var(--muted);
+  margin-top: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.install-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.install-btn-yes {
+  background: radial-gradient(circle at 0 0, rgba(251,191,36,0.18), rgba(23,23,23,1));
+  border: 1px solid rgba(250,204,21,0.65);
+  color: #fef9c3;
+  padding: 7px 14px;
+  border-radius: 7px;
+  font-family: "Orbitron", sans-serif;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.install-btn-yes:hover {
+  box-shadow: 0 0 16px rgba(250,204,21,0.4);
+}
+
+.install-btn-no {
+  background: none;
+  border: 1px solid rgba(148,163,184,0.4);
+  color: var(--muted);
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all 0.15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.install-btn-no:hover {
+  border-color: var(--danger);
+  color: var(--danger);
+}

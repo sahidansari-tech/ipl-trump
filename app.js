@@ -95,6 +95,15 @@ const PD = [
 
 const $ = id => document.getElementById(id);
 
+// Haptic feedback (Android Chrome + some iOS)
+const HX = {
+    tap: () => navigator.vibrate?.([18]),
+    pick: () => navigator.vibrate?.([30]),
+    win: () => navigator.vibrate?.([50, 40, 90]),
+    elim: () => navigator.vibrate?.([180]),
+    champ: () => navigator.vibrate?.([60, 40, 60, 40, 200]),
+};
+
 let db = null;
 let roomRef = null;
 let fbOk = false;
@@ -452,6 +461,7 @@ function renderGame() {
 
 async function pickStat(k) {
     if (!fbOk || !roomRef) return;
+    HX.pick();
 
     // Animate the card + flash the tapped stat
     const card = document.querySelector('.ipl-card2');
@@ -508,6 +518,7 @@ function doReveal(gs) {
     const wname = winner !== null ? ((slots[winner] && slots[winner].name) || `P${winner + 1}`) : "—";
     const mine = winner === mySlot;
     $("resWinner").textContent = mine ? "🏆 YOU WIN THIS ROUND!" : `${wname} wins this round!`;
+    mine ? HX.win() : HX.tap();
     $("resWinner").className = "res-winner " + (mine ? "c-gold" : "c-muted");
     $("resSub").textContent = `+${Object.keys(rc).length} cards collected`;
     $("sResult").style.display = "flex";
@@ -684,6 +695,7 @@ function doGameOver(gs) {
     const wname = ws != null && slots[ws] ? slots[ws].name : "Champion";
     const mine = ws === mySlot;
     $("goTitle").textContent = mine ? "YOU WIN!" : `${wname} WINS!`;
+    mine ? HX.champ() : HX.elim();
     $("goSub").textContent = mine ? "IPL TRUMP CHAMPION 🏆" : "Better luck next time!";
     const cards = gs.cards || {};
     const wc = parsCards(cards[ws]);
@@ -705,6 +717,46 @@ window.location.reload = window.location.reload.bind(window);
 
 document.addEventListener("DOMContentLoaded", () => {
 
+    // ── SERVICE WORKER ──────────────────────
+    if ("serviceWorker" in navigator) {
+        navigator.serviceWorker.register("/sw.js").catch(() => { });
+    }
+
+    // ── INSTALL PROMPT ───────────────────────
+    let deferredInstall = null;
+
+    window.addEventListener("beforeinstallprompt", e => {
+        e.preventDefault();
+        deferredInstall = e;
+
+        // Show banner after 3s (let user see the game first)
+        setTimeout(() => {
+            const b = document.getElementById("installBanner");
+            if (b) b.style.display = "flex";
+        }, 3000);
+    });
+
+    document.getElementById("installYes")?.addEventListener("click", async () => {
+        if (!deferredInstall) return;
+        const banner = document.getElementById("installBanner");
+        banner?.classList.add("hiding");
+        setTimeout(() => { if (banner) banner.style.display = "none"; }, 300);
+        deferredInstall.prompt();
+        await deferredInstall.userChoice;
+        deferredInstall = null;
+    });
+
+    document.getElementById("installNo")?.addEventListener("click", () => {
+        const banner = document.getElementById("installBanner");
+        banner?.classList.add("hiding");
+        setTimeout(() => { if (banner) banner.style.display = "none"; }, 300);
+    });
+
+    window.addEventListener("appinstalled", () => {
+        const banner = document.getElementById("installBanner");
+        if (banner) banner.style.display = "none";
+        deferredInstall = null;
+    });
     // ── SPLASH ──────────────────────────────
     show("sSplash");
     let pct = 0;
